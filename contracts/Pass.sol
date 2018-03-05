@@ -19,9 +19,6 @@ contract Pass {
 
     /// 增加密码
     function addPassword(bytes32 platform, bytes32 account, bytes32 password)  public payable{
-        require(platform != "");
-        require(account != "");
-        require(password != "");
         if(platform.length >32 || account.length >32 || password.length >32) return;
         require(msg.value >= 10**15);
         admin.transfer(msg.value);
