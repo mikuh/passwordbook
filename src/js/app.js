@@ -50,7 +50,7 @@ App = {
       var _platform = "_" + $('#platform').val()
       var _account = "_" + $('#account').val()
       var _password = "_" + $('#password').val()
-      if(_platform || _account || _password){
+      if (alphanumeric(_platform )|| alphanumeric(_account) || alphanumeric(_password)){
           return alert('Cannot be special characters.')
       }
       App.contracts.Pass.deployed().then(function (instance) {
@@ -136,6 +136,7 @@ function alphanumeric(string){
         return true;
     }
     for(var i=0;i<string.length;i++){
+        console.log('aaaa')
         var code = string.charCodeAt(i);
         if(code < 33 || code > 125){
             return true;
