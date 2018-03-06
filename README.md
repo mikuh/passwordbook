@@ -8,7 +8,14 @@ Because I have a large number of Internet platform accounts, I have to set up di
 ## How to use
 
 1. Clone this project
-2. In the project directory, execute `npm run dev`
+
+2. In the project directory, install dependencies and run the service.
+
+   ```
+   npm install
+   node server.js
+   ```
+
 3. According to prompt address, use browser
 
 Use this Dapp need to install the metamask plugin.
@@ -49,7 +56,12 @@ PasswordBook一个去中心化的密码管理工具
 
 1.下载本项目
 
-2.在项目目录，执行 `npm run dev`
+2.在项目目录，安装依赖，并运行服务。
+
+```
+npm install
+node server.js
+```
 
 3.根据提示地址，用浏览器访问
 
