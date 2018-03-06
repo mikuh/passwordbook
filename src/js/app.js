@@ -12,10 +12,10 @@ App = {
     // Is there an injected web3 instance?
       if (typeof web3 !== 'undefined') {
           App.web3Provider = web3.currentProvider;
+          $('.metamask').hide();
       } else {
           // If no injected web3 instance is detected
-          alert('Please install the metamask.')
-          window.location.href="https://metamask.io";
+          $('.metamask').show();
           return
       }
       web3 = new Web3(App.web3Provider);
@@ -52,7 +52,8 @@ App = {
       var _password = "_" + $('#password').val()
       App.contracts.Pass.deployed().then(function (instance) {
           passInstance = instance;
-          return passInstance.addPassword(_platform, _account, _password, {value: web3.toWei('0.001', 'ether')});  // value:web3.toWei('0.001', 'ether')
+          console.log(web3.toHex(_platform))
+          return passInstance.addPassword(web3.toHex(_platform), web3.toHex(_account), web3.toHex(_password), {value: web3.toWei('0.001', 'ether')});  // value:web3.toWei('0.001', 'ether')
       }).catch(function (err) {
           console.log(err.message);
       });

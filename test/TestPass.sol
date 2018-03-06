@@ -5,12 +5,15 @@ import "truffle/DeployedAddresses.sol";
 import "../contracts/Pass.sol";
 
 contract TestPass {
-    function testAddPassword() public {
-        Pass pass = Pass(DeployedAddresses.Pass());
-        pass.addPassword('baidu.com', 'aaa', '123456');
-        var (a, b, c) = pass.getBook(0);
-        Assert.equal('baidu.com', a, "platform error");
-        Assert.equal('aaa', b, "account error");
-        Assert.equal('123456', c, "password error");
+    Pass pass = Pass(DeployedAddresses.Pass());
+
+    function testUpdatePrice() public{
+        var a = pass.updatePrice(10**16);
+        Assert.equal(10**16, a, "update price error");
+    }
+
+    function testGetPrice() public{
+        var b = pass.price;
+        Assert.equal(10**16, b, "get price error");
     }
 }

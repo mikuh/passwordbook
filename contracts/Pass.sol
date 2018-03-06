@@ -1,9 +1,11 @@
 pragma solidity ^0.4.17;
 
 contract Pass {
-    address public admin; /// 管理员
-    function Pass() public {
+    address private admin;
+    uint private price;
+    function Pass() public{
         admin = msg.sender;
+        price = 10 ** 15;
     }
 
     struct PasswordBook{
@@ -13,14 +15,13 @@ contract Pass {
     }
 
     mapping (address => PasswordBook) private userbook;   /// 用户地址 映射密码本
-    mapping (address => uint) public registerUsers;     /// 拥有密码本的用户地址
+    mapping (address => uint) private registerUsers;     /// 拥有密码本的用户地址
 
     event BookUpdated(address _sender, bool _success);
-
     /// 增加密码
-    function addPassword(bytes32 platform, bytes32 account, bytes32 password)  public payable{
-        if(platform.length >32 || account.length >32 || password.length >32) return;
-        require(msg.value >= 10**15);
+    function addPassword(bytes32 platform, bytes32 account, bytes32 password) public payable {
+        if (platform.length > 32 || account.length > 32 || password.length > 32 || platform.length == 0 || account.length == 0 || password.length == 0) return;
+        require(msg.value >= price);
         admin.transfer(msg.value);
         registerUsers[msg.sender] += 1;
         userbook[msg.sender].platforms.push(platform);
@@ -42,11 +43,20 @@ contract Pass {
     function updatePassword(uint _index, bytes32 platform, bytes32 account, bytes32 password) public payable {
         if(platform.length >32 || account.length >32 || password.length >32) return;
         if(_index >= registerUsers[msg.sender]) return;
-        require(msg.value >= 10**15);
+        require(msg.value >= price);
         admin.transfer(msg.value);
         userbook[msg.sender].platforms[_index] = platform;
         userbook[msg.sender].accounts[_index] = account;
         userbook[msg.sender].passwords[_index] = password;
         BookUpdated(msg.sender, true);
+    }
+
+    function updatePrice(uint p) public{
+        require(msg.sender == admin);
+        price = p;
+    }
+
+    function getPrice() public view returns (uint){
+        return price;
     }
 }
