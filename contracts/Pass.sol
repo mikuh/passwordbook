@@ -41,7 +41,7 @@ contract Pass {
     }
 
     function updatePassword(uint _index, bytes32 platform, bytes32 account, bytes32 password) public payable {
-        if(platform.length >32 || account.length >32 || password.length >32) return;
+        if(platform.length >32 || account.length >32 || password.length >32 || platform.length == 0 || account.length == 0 || password.length == 0) return;
         if(_index >= registerUsers[msg.sender]) return;
         require(msg.value >= price);
         admin.transfer(msg.value);
