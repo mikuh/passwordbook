@@ -50,6 +50,9 @@ App = {
       var _platform = "_" + $('#platform').val()
       var _account = "_" + $('#account').val()
       var _password = "_" + $('#password').val()
+      if(_platform || _account || _password){
+          return alert('Cannot be special characters.')
+      }
       App.contracts.Pass.deployed().then(function (instance) {
           passInstance = instance;
           return passInstance.addPassword(web3.toHex(_platform), web3.toHex(_account), web3.toHex(_password), {value: web3.toWei('0.001', 'ether')});  // value:web3.toWei('0.001', 'ether')
@@ -124,5 +127,19 @@ function getpassword(_index) {
 
 
 function showMyPasswords(_index, a, b, c) {
-        $('.table').append('<tr><td>'+ _index+ '</td><td>'+ a +'</td><td>'+ b +'</td><td>'+ c +'</td></tr>')
+    $('.table').append('<tr><td>' + _index + '</td><td>' + a + '</td><td>' + b + '</td><td>' + c + '</td></tr>')
+}
+
+
+function alphanumeric(string){
+    if(string.length < 1){
+        return true;
     }
+    for(var i=0;i<string.length;i++){
+        var code = string.charCodeAt(i);
+        if(code < 33 || code > 125){
+            return true;
+        }
+    }
+    return false;
+}

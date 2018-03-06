@@ -3,7 +3,7 @@ A Dapp for password management.
 
 # moment
 
-Because I have a large number of Internet platform accounts, I have to set up different complex passwords for security, which leads to many uncommonly used passwords that are easily forgotten.In order to manage the account and password, I developed this DAPP, as long as know your etheric lane private key (that is, just remember one password), all the password in their own hands, as long as the etheric lane network deathless, these records will never be lost.
+Because I have a large number of Internet platform accounts, I have to set up different complex passwords for security, which leads to many uncommonly used passwords that are easily forgotten.In order to manage the account and password, I developed this DAPP, as long as know your etheric lane private key (that is, just remember one password), all the other passwords in your own hands, as long as the Ethernet network deathless, these records will never be lost.
 
 ## How to use
 
