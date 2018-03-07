@@ -34,8 +34,11 @@
         <label for="password">Password</label>&nbsp;&nbsp;<small><a href="javascript:void(0)" id="auto-pass">auto generate</a></small>
         <input type="text" class="form-control" id="password" placeholder="Password">
     </div>
-
-    <button type="button" class="btn btn-default btn-add">Save</button>
+    <div class="form-group">
+        <label for="key">Encrypted Key</label>&nbsp;&nbsp; <small style="color: red">* Must remember, otherwise all passwords will be lost.</small>
+        <input type="text" class="form-control" id="key" placeholder="Encrypted Key">
+    </div>
+    <button type="button" class="btn btn-default btn-add">encryption storage</button>
 
     <hr><br>
     <button type="button" class="btn btn-default btn-list">view my passwords</button>
@@ -64,6 +67,8 @@
 
 
 <script src="js/jquery.min.js"></script>
+<script src="js/rollups/sha3.js"></script>
+<script src="js/rollups/aes.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>

@@ -47,15 +47,17 @@ App = {
 
 
   addpassword: function () {
-      var _platform = "_" + $('#platform').val()
-      var _account = "_" + $('#account').val()
-      var _password = "_" + $('#password').val()
-      if (alphanumeric(_platform )|| alphanumeric(_account) || alphanumeric(_password)){
+      var _platform = $('#platform').val().trim();
+      var _account =  $('#account').val().trim();
+      var _password = $('#password').val().trim();
+      var _key = $('#key').val().trim();
+      if (alphanumeric(_platform )|| alphanumeric(_account) || alphanumeric(_password) || alphanumeric(_key)){
           return alert('Cannot be special characters.')
       }
       App.contracts.Pass.deployed().then(function (instance) {
           passInstance = instance;
-          return passInstance.addPassword(web3.toHex(_platform), web3.toHex(_account), web3.toHex(_password), {value: web3.toWei('0.001', 'ether')});  // value:web3.toWei('0.001', 'ether')
+          console.log(encrypt(_platform, _key), encrypt(_account, _key), encrypt(_password, _key))
+          return passInstance.addPassword(encrypt(_platform, _key), encrypt(_account, _key), encrypt(_password, _key), {value: web3.toWei('0.001', 'ether')});  // value:web3.toWei('0.001', 'ether')
       }).catch(function (err) {
           console.log(err.message);
       });
@@ -111,6 +113,7 @@ Array.prototype.shuffle = function() {
 
 
 function getpassword(_index) {
+    var _key=$('#key').val();
     $('.table').empty();
     $('.table').append('<tr><td>index</td><td>platform</td><td>account</td><td>password</td></tr>');
     App.contracts.Pass.deployed().then(function (instance) {
@@ -118,7 +121,7 @@ function getpassword(_index) {
         return passInstance.getBook(_index);
     }).then(function (result) {
         // console.log(web3.toAscii(result[0]).substring(1), web3.toAscii(result[1]).substring(1), web3.toAscii(result[2]).substring(1))
-        showMyPasswords(_index, web3.toAscii(result[0]).substring(1), web3.toAscii(result[1]).substring(1), web3.toAscii(result[2]).substring(1))
+        showMyPasswords(_index, decrypt(result[0], _key), decrypt(result[1], _key), decrypt(result[2], _key))
         $('.mypasswords').show()
     }).catch(function (err) {
         console.log(err.message);
@@ -136,11 +139,23 @@ function alphanumeric(string){
         return true;
     }
     for(var i=0;i<string.length;i++){
-        console.log('aaaa')
         var code = string.charCodeAt(i);
         if(code < 33 || code > 125){
             return true;
         }
     }
     return false;
+}
+
+
+function encrypt(message, _key){
+    var key = CryptoJS.SHA3(_key).toString().substring(0,32);
+    var encrypted = CryptoJS.AES.encrypt(message, key).toString();
+    return encrypted
+}
+
+function decrypt(encrypted, _key){
+    var key = CryptoJS.SHA3(_key).toString().substring(0,32);
+    var decrypted = CryptoJS.AES.decrypt(encrypted, key);
+    return CryptoJS.enc.Utf8.stringify(decrypted)
 }
