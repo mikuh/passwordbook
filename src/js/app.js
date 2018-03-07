@@ -114,6 +114,9 @@ Array.prototype.shuffle = function() {
 
 function getpassword(_index) {
     var _key=$('#key').val();
+    if(_key == ""){
+        return alert("please input Encrypted Key!")
+    }
     $('.table').empty();
     $('.table').append('<tr><td>index</td><td>platform</td><td>account</td><td>password</td></tr>');
     App.contracts.Pass.deployed().then(function (instance) {
